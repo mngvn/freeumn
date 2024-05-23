@@ -1,0 +1,42 @@
+:root{
+    --primary:#2a2d34;
+    --secondary:#30c5ff;
+    
+}
+
+body {
+    background-color: #800000;
+}
+
+#browseView{
+    display: flex;
+    background-color: #800000;
+}
+
+
+.card {
+    border: none;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 100ms;
+    transition-timing-function: cubic-bezier(0,1.48,1,1.26);
+}
+.card:hover {
+    cursor: pointer;
+    transform: scale(1.03);
+}
+.cardFlex{
+    gap: 0.5em;
+}
+
+.product-title{
+    margin-bottom: 1em;
+}
+
+@media screen and (min-width: 576px){
+    #desktop-tag{
+        height: max-content;
+        top: 1.5em;
+        background-color: #414550;
+    }
+}

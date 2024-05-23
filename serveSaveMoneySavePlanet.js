@@ -1,0 +1,170 @@
+const fs = require("fs");
+const express = require('express');
+const multer = require('multer');
+const upload = multer({ dest: './' });
+var url = require('url');
+const path = require('path');
+const csv = require('csv-parser');
+const app = express();
+const request = require("request");
+var randomstring = require("randomstring");
+
+// Sets destination for all ejs files
+app.set('views', __dirname + '/app/views');
+
+app.use(express.static(__dirname+"/Inventory"));
+app.use(express.static(__dirname+'/css'));
+app.use(express.static(__dirname+'/js'));
+
+// Require for controllers
+const uploadRoute = require("./app/controllers/upload.js");
+const responsiveImg = require("./app/controllers/responsiveImg.js");
+
+// Require for routing
+const contactRoute = require("./app/routes/contact.js");
+const browseRoute = require("./app/routes/browse.js");
+const uploadCSVRoute = require("./app/routes/uploadCSV.js");
+
+// Routers
+app.get('/', function (req, res) {
+    res.render("index.ejs");
+	request('http://128.101.131.217:3111/', function (error, response, body) {
+	  console.error('error:', error); // Print the error if one occurred
+	  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+	  console.log('body:', body); // Print the HTML for the Google homepage.
+	});
+});
+app.use("/browse", browseRoute);
+app.use("/uploadCSV", uploadCSVRoute);
+app.use("/contact", contactRoute);
+
+// Controlers
+app.use("/uploaddb", uploadRoute);
+app.use("/responsiveImg", responsiveImg);
+
+app.get('/addFreeJunkRow', (req, res) => {
+	var barcode = req.query.barcode;
+	var location = req.query.location;
+	var quantity = req.query.quantity;
+	var catagory = req.query.catagory;
+});
+
+
+// !!!mess below
+let fullImageString = 'data:image/jpeg;base64,'; // Variable to store the full base64-encoded image string
+var chunkArray = Array.from({ length: 100 }, () => "");
+var collectedChunks = 0;
+app.get("/upload", (req, res) => {
+    let chunk = req.query.chunk;    // Assuming 'chunk' is the query parameter for the image chunk
+    var barcode = req.query.barcode;
+    var chunkNum = req.query.chunkNum;
+    var totalChunks = req.query.totalChunks;
+    var destination = req.query.destination;
+
+    collectedChunks++;
+
+    console.log("Recived "+barcode+" chunk! "+chunkNum+"/"+totalChunks+" ("+collectedChunks+" collected)");
+    
+    chunkArray[chunkNum] = chunk.replace(/ /g, "+"); // Concatenate the chunk to the full image string
+
+    console.log("all collected?: "+(totalChunks==collectedChunks));
+    if(totalChunks==collectedChunks){
+        console.log("Oh wow this is the last chunk!");
+        
+        console.log("Recived FINAL chunk!");
+        // Process the full image string (e.g., decode it back to binary image data)
+
+        fullImageString += chunkArray.join("");
+        
+        fs.writeFile('buffer.txt', fullImageString, (err) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send("Error saving buffer text");
+                return;
+            }
+            console.log("buffer text saved successfully");
+        });
+        
+        console.log("Chunk combined and saved in: "+destination+"!");
+        // Save or process the imageData as needed
+	
+	if(destination == "ReUse"){
+		console.log("Save Destination Recorded as ReUse");
+		saveJPEGImageFromDataURI(fullImageString, "./Inventory/images/"+barcode+".jpg");
+	}else if(destination == "FreeJunk"){
+		console.log("Save Destination Recorded as FreeJunk");
+		saveJPEGImageFromDataURI(fullImageString, "./FreeJunkInventory/images/"+barcode+".jpg");
+	}
+        // Reset the fullImageString for the next image
+        fullImageString = 'data:image/jpeg;base64,';
+        collectedChunks = 0;
+        chunkArray = Array.from({ length: 100 }, () => "");
+    }
+
+    res.send("Received chunk");
+});
+
+app.get("/addDataRow", (req, res) => {
+        var barcode = req.query.barcode;
+    	var name = req.query.name;
+    	var catagory = req.query.catagory;
+	var price = req.query.price;
+
+	var correctPassword = "Picard47AlphaTango";
+	var password = req.query.password;
+	if(password == correctPassword){
+        // Construct the CSV-formatted string for the new row
+        var newRow = `${barcode},${name},${price},${category}\n`;
+
+        // Append the new row to the file
+        fs.appendFile('./newInventory.csv', newRow, (err) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Failed to add row to CSV file');
+            } else {
+                res.send("Row added successfully");
+            }
+        });
+    } else {
+        res.status(401).send("Unauthorized");
+    }
+});
+
+const options = {
+    key: fs.readFileSync('./www.freeumn.com.key'),
+    cert: fs.readFileSync('./cert.pem')
+}
+const https = require("https");
+var server = https.createServer(options, app).listen(443, function(){
+    console.log("~SSL Express Server Online!~");
+});
+
+
+
+function saveJPEGImageFromDataURI(dataURI, filePath) {
+    try {
+        const base64Data = dataURI.split(';base64,').pop();
+        fs.writeFileSync(filePath, base64Data, { encoding: 'base64' });
+        console.log(`Image saved successfully at: ${filePath}`);
+    } catch (err) {
+        console.error(`Failed to save image: ${err}`);
+    }
+}
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, '.');
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
+
+
+
+
+
+
+
+
+

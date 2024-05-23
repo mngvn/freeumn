@@ -1,0 +1,1 @@
+<img src="images/<%= serial %>.jpg" alt="example image here" width="400px"/>

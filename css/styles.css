@@ -1,0 +1,61 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    color: white;
+    background-image: url("https://cdn.mos.cms.futurecdn.net/K6WmxeWt9gT5CcQQRKUuQM-1200-80.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh; /* Set the height to 100% of the viewport height */
+    font-family: monospace;
+    transition: 0.2s;
+}
+
+h1 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 4vw;
+    text-shadow: 2px 3px black;
+}
+
+#message1{
+    margin-top: 20px;
+}
+#message2{
+    margin-top: 20px;
+}
+form{
+    background-color: #56cfff;
+    color: black;
+    width: 26vw;
+    height: 22vw;
+    text-align: center;
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: center;
+    transition: 0.5s;
+    align-items: baseline;
+    flex-direction: row;
+    border: .5vw dashed black;
+    border-radius: 50px;
+    font-size: 3vw; 
+    padding: 2vw;
+    padding-top: 5%;
+}
+form:hover{
+    transform:scale(1.1);
+}
+form:active{
+    background-color:yellow;
+    transition: 0.03s;
+}
+#formFlex{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-evenly;
+    margin-top: 6vh;
+}
