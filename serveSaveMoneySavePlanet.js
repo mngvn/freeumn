@@ -8,7 +8,8 @@ const csv = require('csv-parser');
 const app = express();
 const request = require("request");
 var randomstring = require("randomstring");
-
+//PORT
+const port = 3000;
 // Sets destination for all ejs files
 app.set('views', __dirname + '/app/views');
 
@@ -24,6 +25,7 @@ const responsiveImg = require("./app/controllers/responsiveImg.js");
 const contactRoute = require("./app/routes/contact.js");
 const browseRoute = require("./app/routes/browse.js");
 const uploadCSVRoute = require("./app/routes/uploadCSV.js");
+// const { port } = require("./app/database/config.js");
 
 // Routers
 app.get('/', function (req, res) {
@@ -130,14 +132,21 @@ app.get("/addDataRow", (req, res) => {
     }
 });
 
-const options = {
-    key: fs.readFileSync('./www.freeumn.com.key'),
-    cert: fs.readFileSync('./cert.pem')
+if(fs.existsSync('./www.freeumn.com.key')){
+    const options = {
+        key: fs.readFileSync('./www.freeumn.com.key'),
+        cert: fs.readFileSync('./cert.pem')
+    }
+    const https = require("https");
+    var server = https.createServer(options, app).listen(port, function(){
+        console.log(`~SSL Express Server Online!~`);
+    });
+} else{
+    app.listen(port, (res,req) => {
+        console.log(`~SSL Express Server Online on port ${port}`);
+    })
 }
-const https = require("https");
-var server = https.createServer(options, app).listen(443, function(){
-    console.log("~SSL Express Server Online!~");
-});
+
 
 
 
