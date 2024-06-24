@@ -1,33 +1,34 @@
 // $body-bg-color: #2a2d34;
-$primary: #30c5ff;
-$secondary: #414550;
-$success: #00B5FC;
-$danger: #2a2d34;
+$primary: #7a0019;
+$secondary: white;
+$success: white;
+$danger: #7a0019;
 
 $body-bg:$secondary;
-$body-color: #30c5ff;
-$border-color: #414550;
+$body-color: #7a0019;
+$border-color: #b9aaaa;
 
 // list groups
-$list-group-hover-bg:#2a2d34;
-$list-group-action-hover-color:#30c5ff;
-$list-group-active-color:#2a2d34;
-$list-group-active-bg: #30c5ff;
+$list-group-hover-bg:#7a0019;
+$list-group-action-hover-color:#5a5a5a;
+$list-group-active-color: #7a0019;
+$list-group-active-bg: #5a5a5a;
 $list-group-action-color:none;
 $list-group-action-hover-color:none;
 $list-group-action-active-color:none;
 $list-group-action-active-bg:none;
 
 // badges
-$secondary-text: #2a2d34;
+$primary-text-color: #5a5a5a;
+$secondary-text: #b9aaaa;
 
 // pagination
-$pagination-hover-color: #414550;
-$pagination-hover-bg: #30c5ff;
-$pagination-focus-color:#414550;
-$pagination-focus-bg: #30c5ff;
+$pagination-hover-color: #7a0019;
+$pagination-hover-bg: #5a5a5a;
+$pagination-focus-color:#b9aaaa;
+$pagination-focus-bg: #5a5a5a;
 $pagination-focus-box-shadow: none;
 $pagination-focus-outline:none;
-$pagination-disabled-bg: #2a2d34;
+$pagination-disabled-bg: #b9aaaa;
 @import "bootstrap";
 

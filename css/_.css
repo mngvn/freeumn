@@ -1,16 +1,12 @@
 :root{
-    --primary:#2a2d34;
-    --secondary:#30c5ff;
-    
+    --primary: #d5d6d2;
+    --secondary: #800000;
 }
 
-body {
-    background-color: #800000;
-}
+
 
 #browseView{
     display: flex;
-    background-color: #800000;
 }
 
 
@@ -32,11 +28,17 @@ body {
 .product-title{
     margin-bottom: 1em;
 }
+.container-xxl {
+    width: 100%; /* Full width */
+    margin: auto; /* Center horizontally */
+    max-width: 100%; /* Ensure container doesn't exceed viewport width */
+    background-color: var(--primary) !important;
+}
 
 @media screen and (min-width: 576px){
     #desktop-tag{
         height: max-content;
-        top: 1.5em;
-        background-color: #414550;
+        top: 1em;
+        background-color: #d5d6d2;
     }
 }

@@ -1,9 +1,86 @@
-<!-- This will be the contact page -->
-
 <%- include("partials/header.ejs") %>
+<link rel="stylesheet" href="bootstrap.css">
+<link rel="stylesheet" href="styles.css">
+<style>
+    /* Custom CSS for this page */
+    #about-us,
+    #contact-form,
+    #location-map {
+        color: black; /* Set text color to black */
+    }
 
+    /* Adjust input box alignment */
+    .form-control {
+        width: 100%;
+    }
+
+    /* Adjust submit button size */
+    .btn-primary {
+        width: 100%; /* Make the button fill the entire width */
+    }
+</style>
 <main class="container-fluid">
-    <h1>Page in progress - Michael was here !</h1>
+    <div class="row">
+        <!-- About Us Section -->
+        <section id="about-us" class="col-md-6">
+            <h2>About Us</h2>
+            <p>Add a brief blurb about your company here. You can talk about your mission, values, and what sets you apart from others.</p>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section id="contact-form" class="col-md-6">
+            <h2>Contact Us</h2>
+            <form>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                </div>
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" rows="5" placeholder="Enter your message"></textarea>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <!-- Location Map Section -->
+    <section id="location-map">
+        <h2>Our Location</h2>
+        <p>This is our location map<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill<br>
+            tofill.</p>
+    </section>
+    
 </main>
 
 <%- include("partials/footer.ejs") %>
